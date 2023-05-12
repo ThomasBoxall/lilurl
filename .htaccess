@@ -5,4 +5,4 @@ RewriteEngine On
 RewriteRule ^([a-zA-Z0-9]+)/?$ index.php?p=$1 [L] 
 </IfModule>
 
-Redirect /database.json /index.php
+Redirect /database.json https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUTbmV2ZXJnb25uYWdpdmV5b3V1cA%3D%3D
