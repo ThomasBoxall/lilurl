@@ -5,6 +5,7 @@
     --fgcol: black;
     --accentGrey: #868f89;
     --accentGreen: #52ab70;
+    --accentRed: #dc143c
 }
 
 html{
@@ -58,9 +59,32 @@ form input[type=submit]{
     cursor: pointer;
 }
 
-.url-box{
+
+.response-box{
     text-align: center;
-    background-color: var(--accentGreen);
     width: 80%;
     margin: 0px auto;
+    height: 3em;
+    border-radius: 10px;
+}
+
+.response-box p{
+    padding-top: 0.1em;
+    padding-bottom: 0em;
+}
+
+.response-box p:first-of-type{
+    padding-top: 0.7em;
+}
+
+.url-box{
+    background-color: var(--accentGreen);
+}
+
+.error-box{
+    background-color: var(--accentRed);
+}
+
+.pointer{
+    cursor:pointer;
 }

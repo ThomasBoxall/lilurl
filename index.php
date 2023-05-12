@@ -20,7 +20,7 @@ function goToShortUrl(){
         echo "short url exists";
         header("Location: ".urldecode(getLongURL($shortUrl)));
     } else{
-        $error = "doesn't exist";
+        $error = "This URL doesn't exist in the database.";
     }
 }
 
@@ -30,15 +30,15 @@ function shortenURL(){
     if(!checkIfLongURLExists($urlToShorten)){
         // var_dump($database);
         $shortURLCode = generateShortCode();
-        $url = "https://lilurl.link/?p=". $shortURLCode;
-        echo $url;
+        $url = "https://lilurl.link/". $shortURLCode;
+        // echo $url;
         // echo $urlToShorten;
         // echo "<br>" . $shortURLCode;
         // var_dump($database);
         addToDatabase($urlToShorten, $shortURLCode, $database);
-        $error = "done";
+        // $error = "Success!";
     }else{
-        $error = "already done.";
+        $error = "This URL has already been added.";
     }
 }
 
@@ -99,11 +99,8 @@ function checkShortURLExists($shortURLToCheck){
 
 function addToDatabase($longURL, $shortURL, $database){
     // global $database;
-    // var_dump($database);
     array_push($database, array('longURL'=>$longURL, 'shortURL'=>$shortURL));
-    // var_dump($database);
     file_put_contents("database.json", json_encode($database));
-    // var_dump($database);
 }
 ?>
 <!DOCTYPE html>
@@ -127,19 +124,35 @@ function addToDatabase($longURL, $shortURL, $database){
                 <input type="submit" value="Go➡️" name="submit"> 
             </form>
             <?php
-                global $url, $error;
-                if(isset($url)){
+                if($url != ""){
                     // we need to display the url
-                    echo "<div class='url-box>";
-                        echo "<a href=" . $url . ">" . $url . "</a>";
+                    echo "<div id='success-box' class='response-box url-box'>";
+                        echo "<p><a href='" . $url . "' id='shortURLToCopy'>" . $url . "</a> <span class='pointer' onclick='copy()'>📋</span></p>";
                     echo "</div>";
                 }
-                echo $error;
-                echo "123";
+                if($error != ""){
+                    echo "<div class='response-box error-box'>";
+                        echo "<p>" . $error . "</p>";
+                    echo "</div>";
+                }
             ?>
         </div>
     </main>
 
-<?=$error?>
+
+    <script>
+        function copy(){
+            let copyText = document.getElementById('shortURLToCopy');
+
+            navigator.clipboard.writeText(copyText.innerHTML);
+            // alert(copyText.innerText.toString());
+
+            let successBox = document.getElementById('success-box');
+            let copySuccess = document.createElement('p');
+            copySuccess.innerHTML = "Copied to clipboard!";
+            successBox.append(copySuccess);
+        }
+    </script>
+
 </body>
 </html>
